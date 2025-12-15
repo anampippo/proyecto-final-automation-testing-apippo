@@ -27,17 +27,36 @@ El framework fue diseñado para ser **escalable, mantenible y fácil de extender
 
 proyecto-final-automation-testing-apippo/
 │
-├── pages/ # Page Objects de UI
-├── tests/ # Tests de UI y API (Pytest)
-├── features/ # Features y Steps para BDD (Behave)
-│ ├── dummy.feature
-│ └── steps/dummy_steps.py
-├── reports/ # Reportes HTML y JSON generados
-├── utils/ # Utilidades comunes
-├── pytest.ini # Configuración de pytest
-├── behave.ini # Configuración de Behave (si existe)
-├── requirements.txt # Dependencias
-└── README.md
+├── pages/              # Page Objects de UI
+│   ├── login_page.py
+│   ├── inventory_page.py
+│   └── checkout_page.py
+│
+├── tests/              # Tests de UI y API (Pytest)
+│   ├── api/
+│   │   └── test_reqres_api.py
+│   └── ui/
+│       ├── test_login.py
+│       ├── test_purchase_flow.py
+│       └── users.json
+│
+├── features/           # Features y Steps para BDD (Behave)
+│   ├── dummy.feature
+│   └── steps/
+│       └── dummy_steps.py
+│
+├── reports/            # Reportes HTML y JSON generados
+│   └── report.html
+│
+├── utils/              # Utilidades comunes
+│   ├── driver_factory.py
+│   └── logger.py
+│
+├── pytest.ini          # Configuración de pytest
+├── behave.ini          # Configuración de Behave (si existe)
+├── requirements.txt    # Dependencias
+└── README.md           # Documentación del proyecto
+
 
 ---
 
