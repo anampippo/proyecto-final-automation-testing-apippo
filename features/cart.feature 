@@ -1,0 +1,9 @@
+@ui @regression
+Feature: Carrito de compras
+
+  Background:
+    Given el usuario está logueado y en la página de inventario
+
+  Scenario: Agregar "Sauce Labs Backpack" al carrito
+    When agrega "Sauce Labs Backpack" al carrito
+    Then el contador del carrito muestra "1"

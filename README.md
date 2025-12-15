@@ -15,7 +15,6 @@ El framework fue diseñado para ser **escalable, mantenible y fácil de extender
 * Pytest
 * Selenium WebDriver
 * Requests
-* Behave (BDD)
 * Page Object Model (POM)
 * Pytest HTML Report
 * Logging
@@ -25,40 +24,27 @@ El framework fue diseñado para ser **escalable, mantenible y fácil de extender
 
 ## 📁 Estructura del Proyecto
 
+```
 proyecto-final-automation-testing-apippo/
 │
-├── pages/              # Page Objects de UI
-│   ├── login_page.py
-│   ├── inventory_page.py
-│   └── checkout_page.py
-│
-├── tests/              # Tests de UI y API (Pytest)
-│   ├── api/
-│   │   └── test_reqres_api.py
-│   └── ui/
-│       ├── test_login.py
-│       ├── test_purchase_flow.py
-│       └── users.json
-│
-├── features/           # Features y Steps para BDD (Behave)
+├── pages/                 # Page Objects de UI
+├── tests/                 # Tests de UI y API (Pytest)
+├── features/              # Features y Steps para BDD (Behave)
 │   ├── dummy.feature
+│   ├── login.feature
+│   ├── cart.feature
 │   └── steps/
-│       └── dummy_steps.py
-│
-├── reports/            # Reportes HTML y JSON generados
-│   └── report.html
-│
-├── utils/              # Utilidades comunes
-│   ├── driver_factory.py
-│   └── logger.py
-│
-├── pytest.ini          # Configuración de pytest
-├── behave.ini          # Configuración de Behave (si existe)
-├── requirements.txt    # Dependencias
-└── README.md           # Documentación del proyecto
-
-
----
+│       ├── dummy_steps.py
+│       ├── login_steps.py
+│       └── cart_steps.py
+├── reports/               # Reportes HTML y JSON generados
+│   └── screens/           # Screenshots de fallos
+├── utils/                 # Utilidades comunes
+├── pytest.ini             # Configuración de pytest
+├── behave.ini             # Configuración de Behave
+├── requirements.txt       # Dependencias
+└── README.md
+```
 
 ## 🧪 Tipos de Pruebas Implementadas
 
@@ -77,16 +63,29 @@ proyecto-final-automation-testing-apippo/
 * DELETE /users/{id}
 
 ⚠️ **Nota:**
-Los tests de API están marcados como `xfail` debido a restricciones del endpoint público **ReqRes**, que devuelve código **403** para requests automatizados.
+Los tests de API están marcados como `xfail` debido a restricciones del endpoint público **ReqRes**, el cual devuelve código **403** para requests automatizados.
 Los flujos, validaciones y aserciones están correctamente implementados y la limitación externa se documenta sin afectar la ejecución del framework.
 
-### 🔹 Pruebas BDD (Behave)
+---
 
-* Features configuradas: `dummy.feature`
-* Scenarios: `@smoke` y `@regression`
-* Todos los pasos (`steps`) implementados y ejecutables
-* Reportes generados: `reports/behave.json` (JSON) y consola
-* Validación exitosa de la ejecución (`--dry-run` y ejecución normal)
+## 🧩 BDD (Behave)
+
+### Features
+
+* `login.feature`: Login exitoso + 3 escenarios de error (usuario bloqueado, contraseña incorrecta, campos vacíos)
+* `cart.feature`: Agregar producto "Sauce Labs Backpack" con Background de login
+* `dummy.feature`: Ejemplo de feature dummy para pruebas iniciales
+
+### Steps
+
+* `login_steps.py` y `cart_steps.py`: Conectan los steps con **Page Objects** y logging
+* Steps implementan métodos de `LoginPage` e `InventoryPage` con logs informativos
+
+### Hooks (`environment.py`)
+
+* `before_all()`: Inicializa WebDriver
+* `after_step()`: Captura screenshots automáticos en fallos en `reports/screens/`
+* `after_all()`: Cierra WebDriver
 
 ---
 
@@ -116,57 +115,25 @@ pip install -r requirements.txt
 
 ## ▶️ Ejecución de las Pruebas
 
-### Pytest (UI y API)
-
-* Ejecutar todas las pruebas:
+### Behave
 
 ```bash
-python3 -m pytest
+python3 -m behave --dry-run      # Verifica que Behave reconoce los features
+python3 -m behave -t @smoke     # Ejecuta solo smoke tests
 ```
 
-* Ejecutar pruebas generando reporte HTML:
+### Pytest
 
 ```bash
-python3 -m pytest --html=reports/report.html --self-contained-html
+pytest tests_behave/ -v         # Ejecuta la suite BDD desde Pytest
+pytest --html=reports/report.html --self-contained-html  # Genera reporte HTML
 ```
 
-### Behave (BDD)
+### Reportes
 
-* Verificar que Behave reconoce los features:
-
-```bash
-python3 -m behave --dry-run
-```
-
-* Ejecutar solo smoke tests:
-
-```bash
-python3 -m behave -t @smoke
-```
-
-* Ejecutar solo regression tests:
-
-```bash
-python3 -m behave -t @regression
-```
-
-* Generar reporte JSON:
-
-```bash
-python3 -m behave -f json -o reports/behave.json -f pretty
-```
-
----
-
-## 📊 Reportes
-
-* Los reportes de Pytest se guardan en `reports/report.html`
-* Los reportes de Behave se guardan en `reports/behave.json`
-* Incluyen:
-
-  * Estado de los tests (Passed / XFailed)
-  * Duración de ejecución
-  * Evidencia clara del resultado de cada prueba
+* Carpeta `reports/` con reportes HTML y JSON
+* Carpeta `reports/screens/` con screenshots de fallos
+* Información de cada test: Passed / XFailed, duración, evidencia
 
 ---
 
@@ -175,9 +142,8 @@ python3 -m behave -f json -o reports/behave.json -f pretty
 * Las pruebas son independientes entre sí
 * El framework es fácilmente escalable
 * La estructura facilita el mantenimiento y la incorporación de nuevos tests
-* El proyecto cumple con todos los requisitos solicitados en la consigna
+* Los archivos BDD permiten comunicación clara con stakeholders no técnicos
+* Preparación para integración CI/CD
 
----
-
-**Autor:** Anabella Pippo
-**Proyecto Final – Automation Testing QA**
+Autor: Anabella Pippo
+Proyecto Final – Automation Testing QA
