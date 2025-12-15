@@ -50,9 +50,6 @@ proyecto-final-automation-testing-apippo/
 ├── requirements.txt # Dependencias
 └── README.md
 
-yaml
-Copiar código
-
 ---
 
 ## 🧪 Tipos de Pruebas Implementadas
