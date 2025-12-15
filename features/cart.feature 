@@ -1,9 +1,11 @@
 @ui @regression
-Feature: Carrito de compras
+Feature: Funcionalidad de carrito
 
   Background:
-    Given el usuario está logueado y en la página de inventario
+    Given el usuario está en la página de login
+    When el usuario ingresa usuario "standard_user" y contraseña "secret_sauce"
+    Then el usuario es redirigido al inventario
 
   Scenario: Agregar "Sauce Labs Backpack" al carrito
-    When agrega "Sauce Labs Backpack" al carrito
+    When el usuario agrega "Sauce Labs Backpack" al carrito
     Then el contador del carrito muestra "1"
