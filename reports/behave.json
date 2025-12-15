@@ -1,0 +1,3 @@
+[
+{"keyword": "Feature", "name": "Dummy feature", "tags": ["smoke", "regression"], "location": "features/dummy.feature:2", "status": "passed", "elements": [{"type": "scenario", "keyword": "Scenario", "name": "Dummy scenario", "tags": [], "location": "features/dummy.feature:4", "steps": [{"keyword": "Given", "step_type": "given", "name": "dummy step", "location": "features/dummy.feature:5", "match": {"location": "features/steps/dummy_steps.py:3", "arguments": []}, "result": {"status": "passed", "duration": 2.2172927856445312e-05}}], "status": "passed"}]}
+]
